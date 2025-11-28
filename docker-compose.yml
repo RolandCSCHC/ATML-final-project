@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  flask-app:
+    build: .
+    container_name: mj-chatbot
+    ports:
+      - "5001:5001"
+    volumes:
+      # Mount models directory so you can add model files without rebuilding
+      - ./models:/app/models
+      # Mount app files for development (optional - remove if you want production build)
+      - ./app.py:/app/app.py
+      - ./chatbot.py:/app/chatbot.py
+      - ./templates:/app/templates
+      - ./static:/app/static
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+
